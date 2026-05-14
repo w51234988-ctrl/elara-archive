@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>埃尔德里奇档案馆 | 艾拉拉·冯·埃尔德里奇</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=UnifrakturMaguntia&display=swap');
+        body { margin:0; background:#1a120b; color:#e8d5a3; font-family:'Cinzel', serif; }
+        .header { background:linear-gradient(#4a2c0b,#2c1a08); padding:30px; text-align:center; border-bottom:10px solid #d4a017; }
+        h1 { font-family:'UnifrakturMaguntia', cursive; font-size:3.5em; margin:0; color:#d4a017; text-shadow:5px 5px 10px #000; }
+        .container { max-width:1300px; margin:40px auto; display:flex; gap:35px; padding:0 20px; flex-wrap:wrap; }
+        .card { background:#f5e8c7; color:#3c2f2f; border:20px solid #4a2c0b; padding:30px; box-shadow:0 0 40px rgba(0,0,0,0.9); }
+        .portrait img { width:100%; max-width:340px; border:15px solid #8b5a2b; box-shadow:0 15px 30px rgba(0,0,0,0.6); }
+        svg { width:100%; height:auto; background:#d4c4a8; border:3px solid #8b5a2b; }
+        .info-box { margin-top:20px; padding:20px; background:#2c2118; color:#e8d5a3; border:3px solid #8b5a2b; font-size:1.1em; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>埃尔德里奇家族档案馆</h1>
+        <p>王国历 1378 年 · 北方边境守护者</p>
+    </div>
+
+    <div class="container">
+        <div class="card" style="flex:1; min-width:400px;">
+            <h2 style="text-align:center; color:#8b0000;">艾拉拉·冯·埃尔德里奇</h2>
+            <div class="portrait">
+                <img src="https://picsum.photos/id/1011/800/1100" alt="艾拉拉">
+            </div>
+            <p><strong>年龄：</strong>28岁　　<strong>身份：</strong>埃尔德里奇男爵之女，银松森林守护者</p>
+            <p><strong>外貌：</strong>深红褐色及腰长发、翠绿色眼睛、左脸颊剑痕</p>
+            <p><strong>性格：</strong>坚韧聪慧、忠诚勇敢、对背叛极度敏感</p>
+            <h3>主要事迹</h3>
+            <ul>
+                <li>13岁射杀巨狼，获“银松之女”称号</li>
+                <li>黑鸦之战坚守断桥七日</li>
+                <li>正在调查南方黑暗教派</li>
+            </ul>
+        </div>
+
+        <div class="card" style="flex:1.6; min-width:520px;">
+            <h2 style="text-align:center; color:#8b0000;">🗺️ 银松森林领地地图</h2>
+            <svg viewBox="0 0 900 650" xmlns="http://www.w3.org/2000/svg" id="mapSvg"></svg>
+            <div class="info-box" id="infoBox">点击地图上的地点查看详情</div>
+        </div>
+    </div>
+
+    <script>
+        const locations = [
+            {id:0, name:"埃尔德里奇要塞", x:620, y:280, desc:"艾拉拉的主堡，领地核心。"},
+            {id:1, name:"银松之心", x:280, y:180, desc:"古老森林圣地，传说有精灵残留。"},
+            {id:2, name:"灰狼村", x:120, y:420, desc:"艾拉拉13岁成名之地。"},
+            {id:3, name:"黑鸦断桥", x:680, y:480, desc:"著名战场，艾拉拉立下战功。"},
+            {id:4, name:"南方哨站", x:780, y:120, desc:"正在调查黑暗教派。"}
+        ];
+
+        let svgContent = `<rect width="900" height="650" fill="#2e4a2e"/>
+            <polygon points="50,300 150,150 280,280 350,120 480,250" fill="#4a3f35" opacity="0.9"/>
+            <path d="M100 500 Q300 400 450 520 Q650 380 780 480" fill="none" stroke="#4a8cb0" stroke-width="35" opacity="0.7"/>`;
+
+        locations.forEach(loc => {
+            svgContent += `<rect x="\( {loc.x-35}" y=" \){loc.y-25}" width="90" height="60" fill="#8b5a2b" rx="6" onclick="showInfo(${loc.id})" style="cursor:pointer"/>
+                <text x="\( {loc.x+10}" y=" \){loc.y+20}" fill="#e8d5a3" font-size="16" text-anchor="middle">${loc.name}</text>`;
+        });
+
+        document.getElementById('mapSvg').innerHTML = svgContent;
+
+        window.showInfo = function(id) {
+            const loc = locations.find(l => l.id === id);
+            document.getElementById('infoBox').innerHTML = `<strong>\( {loc.name}</strong><br> \){loc.desc}`;
+        };
+    </script>
+</body>
+</html>
